@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -37,7 +38,7 @@ class ItemAdapter(
             binding.txtNome.text = item.nome
             binding.txtQuantidade.text = item.quantidade.toString()
 
-            val formatoMoeda = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+            val formatoMoeda = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("pt-BR"))
             val precoUnitario = formatoMoeda.format(item.precoEstimado)
 
             binding.txtDetalhes.text = "$precoUnitario / ${item.unidade}"
@@ -67,7 +68,7 @@ class ItemAdapter(
                 binding.txtNome.paintFlags = binding.txtNome.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 val corPadrao = androidx.core.content.ContextCompat.getColor(binding.root.context, R.color.text_primary)
                 binding.txtNome.setTextColor(corPadrao)
-                binding.txtPrecoTotal.setTextColor(Color.parseColor("#388E3C"))
+                binding.txtPrecoTotal.setTextColor("#388E3C".toColorInt())
             }
         }
     }

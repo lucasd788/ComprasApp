@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -8,7 +9,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nome do Produto">
+        android:hint="@string/label_nome_do_produto">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNome"
@@ -21,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:baselineAligned="false"
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -28,21 +30,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
-            android:hint="Qtd">
+            android:hint="@string/label_qtd">
+
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etQuantidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:text="1" />
+                android:text="1"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="Preço Unitário (R$)">
+            android:hint="@string/label_preco_unitario_rs">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPreco"
@@ -56,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Unidade de Medida:"
+        android:text="@string/label_unidade_de_medida"
         android:textStyle="bold" />
 
     <HorizontalScrollView
@@ -78,35 +82,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="UN" />
+                android:text="@string/label_un" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipKG"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="KG" />
+                android:text="@string/label_kg" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipG"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="G" />
+                android:text="@string/label_g" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipL"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="L" />
+                android:text="@string/label_l" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipML"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ML" />
+                android:text="@string/label_ml" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 </LinearLayout>

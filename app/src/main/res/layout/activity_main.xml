@@ -31,7 +31,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Mostrar opções"
+            android:contentDescription="@string/label_mostrar_opcoes"
             android:src="@drawable/ic_sort"
             app:tint="@color/text_primary" />
 
@@ -60,14 +60,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gasto Estimado:"
+            android:text="@string/label_gasto_estimado"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtTotalGeral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="R$ 0,00"
+            android:text="@string/label_rs_0_00"
             android:textColor="#388E3C"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:contentDescription="Adicionar Item"
+        android:contentDescription="@string/label_adicionar_item"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/brand_primary"
         app:tint="#FFFFFF"

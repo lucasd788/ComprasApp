@@ -4,38 +4,38 @@
 
     <item
         android:id="@+id/menu_ordenar"
-        android:title="Ordenar por..."
+        android:title="@string/label_ordenar_por"
         android:icon="@drawable/ic_sort"
         app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/ordem_alfabetica"
-                android:title="Nome (A-Z)" />
+                android:title="@string/label_nome_a_z" />
             <item
                 android:id="@+id/ordem_preco_crescente"
-                android:title="Preço (Menor para Maior)" />
+                android:title="@string/label_preco_menor_para_maior" />
             <item
                 android:id="@+id/ordem_preco_decrescente"
-                android:title="Preço (Maior para Menor)" />
+                android:title="@string/label_preco_maior_para_menor" />
             <item
                 android:id="@+id/ordem_quantidade"
-                android:title="Quantidade (Maior Primeiro)" />
+                android:title="@string/label_quantidade_maior_primeiro" />
         </menu>
     </item>
 
     <item
         android:id="@+id/menu_excluir_comprados"
-        android:title="Excluir Riscados"
+        android:title="@string/label_excluir_riscados"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_desmarcar_todos"
-        android:title="Desmarcar Todos"
+        android:title="@string/label_desmarcar_todos"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_tema"
-        android:title="Alternar Tema (Claro/Escuro)"
+        android:title="@string/label_alternar_tema_claro_escuro"
         android:icon="@drawable/ic_tema"
         app:showAsAction="ifRoom" />
 </menu>

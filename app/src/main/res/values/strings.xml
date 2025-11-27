@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">ComprasApp</string>
+    <string name="label_mostrar_opcoes">Mostrar opções</string>
+    <string name="label_gasto_estimado">Gasto Estimado:</string>
+    <string name="label_rs_0_00">R$ 0,00</string>
+    <string name="label_adicionar_item">Adicionar Item</string>
+    <string name="label_nome_do_produto">Nome do Produto</string>
+    <string name="label_qtd">Qtd</string>
+    <string name="label_preco_unitario_rs">Preço Unitário (R$)</string>
+    <string name="label_unidade_de_medida">Unidade de Medida:</string>
+    <string name="label_un">UN</string>
+    <string name="label_kg">KG</string>
+    <string name="label_g">G</string>
+    <string name="label_l">L</string>
+    <string name="label_ml">ML</string>
+    <string name="label_aumentar_quantidade">Aumentar quantidade</string>
+    <string name="label_diminuir_quantidade">Diminuir quantidade</string>
+    <string name="label_ordenar_por">Ordenar por…</string>
+    <string name="label_nome_a_z">Nome (A-Z)</string>
+    <string name="label_preco_menor_para_maior">Preço (Menor para Maior)</string>
+    <string name="label_preco_maior_para_menor">Preço (Maior para Menor)</string>
+    <string name="label_quantidade_maior_primeiro">Quantidade (Maior Primeiro)</string>
+    <string name="label_excluir_riscados">Excluir Riscados</string>
+    <string name="label_desmarcar_todos">Desmarcar Todos</string>
+    <string name="label_alternar_tema_claro_escuro">Alternar Tema (Claro/Escuro)</string>
 </resources>

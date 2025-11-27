@@ -1,8 +1,6 @@
 package com.example.comprasapp
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -11,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.comprasapp.adapter.ItemAdapter
 import com.example.comprasapp.data.local.Item
@@ -70,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.custoTotal.observe(this) { total ->
-            val valorFormatado = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(total ?: 0.0)
+            val valorFormatado = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("pt-BR")).format(total ?: 0.0)
             binding.txtTotalGeral.text = valorFormatado
         }
     }
@@ -136,12 +135,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun alternarTema() {
-        val preferencias = getSharedPreferences("app_preferencias", Context.MODE_PRIVATE)
+        val preferencias = getSharedPreferences("app_preferencias", MODE_PRIVATE)
         val modoEscuroAtual = preferencias.getBoolean("modo_escuro", true)
 
         val novoModoEscuro = !modoEscuroAtual
 
-        preferencias.edit().putBoolean("modo_escuro", novoModoEscuro).apply()
+        preferencias.edit { putBoolean("modo_escuro", novoModoEscuro) }
 
         val modoParaAplicar = if (novoModoEscuro) {
             AppCompatDelegate.MODE_NIGHT_YES
