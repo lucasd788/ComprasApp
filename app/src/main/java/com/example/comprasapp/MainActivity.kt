@@ -42,15 +42,30 @@ class MainActivity : AppCompatActivity() {
     private fun configurarRecyclerView() {
         adapter = ItemAdapter(
             aoClicarSomar = { item ->
-                viewModel.atualizar(item.copy(quantidade = item.quantidade + 1))
+                val novaQtd = arredondar(item.quantidade + 1.0)
+                viewModel.atualizar(item.copy(quantidade = novaQtd))
             },
             aoClicarSubtrair = { item ->
-                if (item.quantidade > 1) {
-                    viewModel.atualizar(item.copy(quantidade = item.quantidade - 1))
+                if (item.quantidade > 0.0) {
+                    val novaQtd = arredondar((item.quantidade - 1.0).coerceAtLeast(0.0))
+                    viewModel.atualizar(item.copy(quantidade = novaQtd))
                 } else {
                     mostrarDialogoConfirmarExclusao(item)
                 }
             },
+            aoSegurarSomar = { item ->
+                val novaQtd = arredondar(item.quantidade + 0.1)
+                viewModel.atualizar(item.copy(quantidade = novaQtd))
+            },
+            aoSegurarSubtrair = { item ->
+                if (item.quantidade > 0.0) {
+                    val novaQtd = arredondar((item.quantidade - 0.1).coerceAtLeast(0.0))
+                    viewModel.atualizar(item.copy(quantidade = novaQtd))
+                } else {
+                    mostrarDialogoConfirmarExclusao(item)
+                }
+            },
+
             aoClicarItem = { item ->
                 viewModel.atualizar(item.copy(comprado = !item.comprado))
             },
@@ -61,6 +76,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvListaItens.layoutManager = LinearLayoutManager(this)
         binding.rvListaItens.adapter = adapter
+    }
+
+    private fun arredondar(valor: Double): Double {
+        return kotlin.math.round(valor * 1000) / 1000.0
     }
 
     private fun configurarObservadores() {
@@ -180,7 +199,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun salvarItem(dialogBinding: DialogItemBinding, itemExistente: Item?) {
         val nome = dialogBinding.etNome.text.toString()
-        val qtd = dialogBinding.etQuantidade.text.toString().toIntOrNull() ?: 1
+        val qtd = dialogBinding.etQuantidade.text.toString().toDoubleOrNull() ?: 1.0
         val preco = dialogBinding.etPreco.text.toString().toDoubleOrNull() ?: 0.0
 
         val chipSelecionadoId = dialogBinding.chipGroupUnidade.checkedChipId

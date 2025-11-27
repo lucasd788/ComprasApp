@@ -8,7 +8,7 @@ data class Item(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val nome: String,
-    val quantidade: Int,
+    val quantidade: Double,
     val precoEstimado: Double,
     val unidade: String,
     val comprado: Boolean = false

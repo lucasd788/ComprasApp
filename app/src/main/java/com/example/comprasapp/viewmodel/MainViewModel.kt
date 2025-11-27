@@ -39,12 +39,14 @@ class MainViewModel(private val repository: ItemRepository) : ViewModel() {
     }
 
     private fun ordenarLista(lista: List<Item>): List<Item> {
-        return when (ordemAtual) {
-            Ordem.ALFABETICA -> lista.sortedBy { it.nome.lowercase() }
-            Ordem.PRECO_CRESCENTE -> lista.sortedBy { it.precoEstimado }
-            Ordem.PRECO_DECRESCENTE -> lista.sortedByDescending { it.precoEstimado }
-            Ordem.QUANTIDADE -> lista.sortedByDescending { it.quantidade }
+        val (ativos, inativos) = lista.partition { it.quantidade > 0.0 }
+        val ativosOrdenados = when (ordemAtual) {
+            Ordem.ALFABETICA -> ativos.sortedBy { it.nome.lowercase() }
+            Ordem.PRECO_CRESCENTE -> ativos.sortedBy { it.precoEstimado }
+            Ordem.PRECO_DECRESCENTE -> ativos.sortedByDescending { it.precoEstimado }
+            Ordem.QUANTIDADE -> ativos.sortedByDescending { it.quantidade }
         }
+        return ativosOrdenados + inativos
     }
 
     fun inserir(item: Item) = viewModelScope.launch {

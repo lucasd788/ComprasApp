@@ -17,6 +17,8 @@ import java.util.Locale
 class ItemAdapter(
     private val aoClicarSomar: (Item) -> Unit,
     private val aoClicarSubtrair: (Item) -> Unit,
+    private val aoSegurarSomar: (Item) -> Unit,
+    private val aoSegurarSubtrair: (Item) -> Unit,
     private val aoClicarItem: (Item) -> Unit,
     private val aoClicarLongo: (Item) -> Unit
 ) : ListAdapter<Item, ItemAdapter.ItemViewHolder>(ComparadorDeItens()) {
@@ -36,11 +38,25 @@ class ItemAdapter(
 
         fun bind(item: Item) {
             binding.txtNome.text = item.nome
-            binding.txtQuantidade.text = item.quantidade.toString()
+
+            val qtdFormatada = when {
+                item.unidade.equals("KG", ignoreCase = true) && item.quantidade > 0.0 && item.quantidade < 1.0 -> {
+                    val gramas = (item.quantidade * 1000).toInt()
+                    "${gramas}g"
+                }
+                item.quantidade % 1.0 == 0.0 -> {
+                    val qtdInteira = item.quantidade.toInt()
+                    "$qtdInteira${item.unidade.lowercase()}"
+                }
+                else -> {
+                    val qtd = item.quantidade.toString().trimEnd('0').trimEnd('.')
+                    "$qtd${item.unidade.lowercase()}"
+                }
+            }
+            binding.txtQuantidade.text = qtdFormatada
 
             val formatoMoeda = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("pt-BR"))
             val precoUnitario = formatoMoeda.format(item.precoEstimado)
-
             binding.txtDetalhes.text = "$precoUnitario / ${item.unidade}"
 
             val totalItem = item.precoEstimado * item.quantidade
@@ -49,11 +65,26 @@ class ItemAdapter(
             binding.btnMais.setOnClickListener { aoClicarSomar(item) }
             binding.btnMenos.setOnClickListener { aoClicarSubtrair(item) }
 
-            binding.root.setOnClickListener { aoClicarItem(item) }
+            binding.btnMais.setOnLongClickListener {
+                aoSegurarSomar(item)
+                true
+            }
+            binding.btnMenos.setOnLongClickListener {
+                aoSegurarSubtrair(item)
+                true
+            }
 
+            binding.root.setOnClickListener { aoClicarItem(item) }
             binding.root.setOnLongClickListener {
                 aoClicarLongo(item)
                 true
+            }
+
+            if (item.quantidade == 0.0) {
+                binding.fundoCard.alpha = 0.5f
+                binding.txtPrecoTotal.text = ""
+            } else {
+                binding.fundoCard.alpha = 1.0f
             }
 
             atualizarVisualComprado(item.comprado)
