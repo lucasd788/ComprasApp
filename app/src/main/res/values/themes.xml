@@ -1,21 +1,23 @@
 <resources>
     <style name="Theme.ComprasApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#2196F3</item>
-        <item name="colorPrimaryVariant">#1976D2</item>
+
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryVariant">@color/brand_primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
 
+        <item name="colorSecondary">@color/brand_secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="android:statusBarColor">@color/brand_primary_dark</item>
+
         <item name="android:windowBackground">@color/app_background</item>
+        <item name="colorSurface">@color/card_background</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
 
         <item name="android:editTextColor">@color/text_primary</item>
-
-        <item name="android:textColorHint">#808080</item>
-
-        <item name="colorControlNormal">@color/text_primary</item>
-
-        <item name="colorControlActivated">@color/text_primary</item>
-
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:textColorHint">#909090</item>
+        <item name="colorControlNormal">@color/text_primary</item> <item name="buttonBarPositiveButtonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
     </style>
 </resources>

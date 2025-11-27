@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ComprasApp</string>
     <string name="label_mostrar_opcoes">Mostrar opções</string>
-    <string name="label_gasto_estimado">Gasto Estimado:</string>
+    <string name="label_total_estimado">Total Estimado:</string>
     <string name="label_rs_0_00">R$ 0,00</string>
     <string name="label_adicionar_item">Adicionar Item</string>
     <string name="label_nome_do_produto">Nome do Produto</string>
