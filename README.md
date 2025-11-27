@@ -4,12 +4,41 @@ Um aplicativo Android simples para gerenciar listas de compras, desenvolvido em 
 
 ## 📱 Telas do App
 
-<div align="center">
-  <img src="screenshots/tela_claro.png" alt="Tema Claro" />
-  <img src="screenshots/tela_escuro.png" alt="Tema Escuro" />
-  <img src="screenshots/dialogo_adicionar.png" alt="Adicionar Item" />
-  <img src="screenshots/dialogo_editar.png" alt="Editar Item" />
-</div>
+### 🌓 Modos de Visualização
+O aplicativo usa o tema do seu dispositivo.
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/tela_claro.png" width="300" alt="Tema Claro" />
+      <br />
+      <sub>Tema Claro</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/tela_escuro.png" width="300" alt="Tema Escuro" />
+      <br />
+      <sub>Tema Escuro</sub>
+    </td>
+  </tr>
+</table>
+
+### 📝 Gerenciamento de Itens
+Interface simples para adicionar e editar produtos com suporte a unidades variadas.
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/dialogo_adicionar.png" width="300" alt="Adicionar Item" />
+      <br />
+      <sub>Adicionar Novo Item</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/dialogo_editar.png" width="300" alt="Editar Item" />
+      <br />
+      <sub>Editar Item</sub>
+    </td>
+  </tr>
+</table>
 
 ## ✨ Funcionalidades
 
