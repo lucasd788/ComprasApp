@@ -1,5 +1,6 @@
 package com.example.comprasapp.adapter
 
+import com.example.comprasapp.R
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -64,8 +65,9 @@ class ItemAdapter(
                 binding.txtPrecoTotal.setTextColor(Color.GRAY)
             } else {
                 binding.txtNome.paintFlags = binding.txtNome.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                binding.txtNome.setTextColor(Color.BLACK)
-                binding.txtPrecoTotal.setTextColor(Color.parseColor("#388E3C")) // Verde Escuro
+                val corPadrao = androidx.core.content.ContextCompat.getColor(binding.root.context, R.color.text_primary)
+                binding.txtNome.setTextColor(corPadrao)
+                binding.txtPrecoTotal.setTextColor(Color.parseColor("#388E3C"))
             }
         }
     }

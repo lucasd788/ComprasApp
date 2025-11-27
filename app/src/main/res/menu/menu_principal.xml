@@ -32,4 +32,10 @@
         android:id="@+id/menu_desmarcar_todos"
         android:title="Desmarcar Todos"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_tema"
+        android:title="Alternar Tema (Claro/Escuro)"
+        android:icon="@drawable/ic_tema"
+        app:showAsAction="ifRoom" />
 </menu>

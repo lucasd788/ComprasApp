@@ -1,5 +1,6 @@
 package com.example.comprasapp
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.comprasapp.adapter.ItemAdapter
@@ -19,7 +21,6 @@ import com.example.comprasapp.viewmodel.MainViewModelFactory
 import com.google.android.material.chip.Chip
 import java.text.NumberFormat
 import java.util.Locale
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -97,6 +98,10 @@ class MainActivity : AppCompatActivity() {
 
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.menu_tema -> {
+                    alternarTema()
+                    true
+                }
                 R.id.ordem_alfabetica -> {
                     viewModel.mudarOrdem(MainViewModel.Ordem.ALFABETICA)
                     true
@@ -128,6 +133,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
         popup.show()
+    }
+
+    private fun alternarTema() {
+        val preferencias = getSharedPreferences("app_preferencias", Context.MODE_PRIVATE)
+        val modoEscuroAtual = preferencias.getBoolean("modo_escuro", true)
+
+        val novoModoEscuro = !modoEscuroAtual
+
+        preferencias.edit().putBoolean("modo_escuro", novoModoEscuro).apply()
+
+        val modoParaAplicar = if (novoModoEscuro) {
+            AppCompatDelegate.MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
+        AppCompatDelegate.setDefaultNightMode(modoParaAplicar)
     }
 
     private fun mostrarDialogoEdicao(item: Item?) {
