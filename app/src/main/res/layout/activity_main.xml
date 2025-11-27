@@ -16,14 +16,15 @@
         android:padding="8dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/ic_search"
-            android:iconifiedByDefault="false"
-            android:queryHint="Buscar item..." />
+            android:theme="@style/Theme.AppCompat.Light"
+            app:iconifiedByDefault="false"
+            app:queryHint="Buscar item..." />
 
         <ImageButton
             android:id="@+id/btnOpcoes"

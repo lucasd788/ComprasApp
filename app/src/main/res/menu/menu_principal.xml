@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_ordenar"
+        android:title="Ordenar por..."
+        android:icon="@drawable/ic_sort"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/ordem_alfabetica"
+                android:title="Nome (A-Z)" />
+            <item
+                android:id="@+id/ordem_preco_crescente"
+                android:title="Preço (Menor para Maior)" />
+            <item
+                android:id="@+id/ordem_preco_decrescente"
+                android:title="Preço (Maior para Menor)" />
+            <item
+                android:id="@+id/ordem_quantidade"
+                android:title="Quantidade (Maior Primeiro)" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/menu_excluir_comprados"
+        android:title="Excluir Riscados"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_desmarcar_todos"
+        android:title="Desmarcar Todos"
+        app:showAsAction="never" />
+</menu>

@@ -1,6 +1,7 @@
 package com.example.comprasapp.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
@@ -11,10 +12,39 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: ItemRepository) : ViewModel() {
 
-    val todosItens: LiveData<List<Item>> = repository.todosItens.asLiveData()
+    enum class Ordem {
+        ALFABETICA, PRECO_CRESCENTE, PRECO_DECRESCENTE, QUANTIDADE
+    }
 
-    val custoTotal: LiveData<Double> = todosItens.map { lista ->
+    private var ordemAtual = Ordem.ALFABETICA
+
+    private val listaDoBanco = repository.todosItens.asLiveData()
+
+    val itensExibidos = MediatorLiveData<List<Item>>().apply {
+        addSource(listaDoBanco) { lista ->
+            value = ordenarLista(lista)
+        }
+    }
+
+    val custoTotal: LiveData<Double> = itensExibidos.map { lista ->
         lista.sumOf { it.quantidade * it.precoEstimado }
+    }
+
+    fun mudarOrdem(novaOrdem: Ordem) {
+        ordemAtual = novaOrdem
+        val listaAtual = listaDoBanco.value
+        if (listaAtual != null) {
+            itensExibidos.value = ordenarLista(listaAtual)
+        }
+    }
+
+    private fun ordenarLista(lista: List<Item>): List<Item> {
+        return when (ordemAtual) {
+            Ordem.ALFABETICA -> lista.sortedBy { it.nome.lowercase() }
+            Ordem.PRECO_CRESCENTE -> lista.sortedBy { it.precoEstimado }
+            Ordem.PRECO_DECRESCENTE -> lista.sortedByDescending { it.precoEstimado }
+            Ordem.QUANTIDADE -> lista.sortedByDescending { it.quantidade }
+        }
     }
 
     fun inserir(item: Item) = viewModelScope.launch {
