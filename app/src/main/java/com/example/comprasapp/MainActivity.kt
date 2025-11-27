@@ -103,8 +103,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.buscar(query ?: "")
+                return true
+            }
+
             override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.buscar(newText ?: "")
                 return true
             }
         })
@@ -187,14 +192,21 @@ class MainActivity : AppCompatActivity() {
             dialogBinding.chipGroupUnidade.check(chipId)
         }
 
-        AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this)
             .setTitle(if (item == null) "Novo Item" else "Editar Item")
             .setView(dialogBinding.root)
             .setPositiveButton("Salvar") { _, _ ->
                 salvarItem(dialogBinding, item)
             }
             .setNegativeButton("Cancelar", null)
-            .show()
+
+        if (item != null) {
+            builder.setNeutralButton("Excluir") { _, _ ->
+                mostrarDialogoConfirmarExclusao(item)
+            }
+        }
+
+        builder.show()
     }
 
     private fun salvarItem(dialogBinding: DialogItemBinding, itemExistente: Item?) {
