@@ -27,7 +27,8 @@ class MainViewModel(private val repository: ItemRepository) : ViewModel() {
     }
 
     val custoTotal: LiveData<Double> = itensExibidos.map { lista ->
-        lista.sumOf { it.quantidade * it.precoEstimado }
+        lista.filter { it.quantidade > 0.0 }
+            .sumOf { it.quantidade * it.precoEstimado }
     }
 
     fun mudarOrdem(novaOrdem: Ordem) {
@@ -40,13 +41,23 @@ class MainViewModel(private val repository: ItemRepository) : ViewModel() {
 
     private fun ordenarLista(lista: List<Item>): List<Item> {
         val (ativos, inativos) = lista.partition { it.quantidade > 0.0 }
-        val ativosOrdenados = when (ordemAtual) {
-            Ordem.ALFABETICA -> ativos.sortedBy { it.nome.lowercase() }
-            Ordem.PRECO_CRESCENTE -> ativos.sortedBy { it.precoEstimado }
-            Ordem.PRECO_DECRESCENTE -> ativos.sortedByDescending { it.precoEstimado }
-            Ordem.QUANTIDADE -> ativos.sortedByDescending { it.quantidade }
+        val (pendentes, comprados) = ativos.partition { !it.comprado }
+
+        val pendentesOrdenados = aplicarOrdem(pendentes)
+        val compradosOrdenados = aplicarOrdem(comprados)
+
+        val inativosOrdenados = inativos.sortedBy { it.nome.lowercase() }
+
+        return pendentesOrdenados + compradosOrdenados + inativosOrdenados
+    }
+
+    private fun aplicarOrdem(lista: List<Item>): List<Item> {
+        return when (ordemAtual) {
+            Ordem.ALFABETICA -> lista.sortedBy { it.nome.lowercase() }
+            Ordem.PRECO_CRESCENTE -> lista.sortedBy { it.precoEstimado }
+            Ordem.PRECO_DECRESCENTE -> lista.sortedByDescending { it.precoEstimado }
+            Ordem.QUANTIDADE -> lista.sortedByDescending { it.quantidade }
         }
-        return ativosOrdenados + inativos
     }
 
     fun inserir(item: Item) = viewModelScope.launch {
