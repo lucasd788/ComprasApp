@@ -261,12 +261,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun mostrarSeletorDeListaParaAdicao() {
-        val nomes = todasAsListasCache.map { it.nome }.toTypedArray()
+        val listasParaEscolha = todasAsListasCache.filter { listasAtivasIds.contains(it.id) }
+        val nomes = listasParaEscolha.map { it.nome }.toTypedArray()
 
         AlertDialog.Builder(this)
             .setTitle("Adicionar em qual lista?")
             .setItems(nomes) { _, which ->
-                val listaEscolhida = todasAsListasCache[which]
+                val listaEscolhida = listasParaEscolha[which]
                 mostrarDialogoEdicao(null, listaEscolhida.id)
             }
             .setNegativeButton("Cancelar", null)
