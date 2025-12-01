@@ -50,7 +50,7 @@ Interface simples para adicionar e editar produtos com suporte a unidades variad
     <td align="center" width="50%">
       <img src="screenshots/dialogo_adicionar.png" width="300" alt="Adicionar Item" />
       <br />
-      <sub>Adicionar Novo</sub>
+      <sub>Novo Item</sub>
     </td>
     <td align="center" width="50%">
       <img src="screenshots/dialogo_editar.png" width="300" alt="Editar Item" />
