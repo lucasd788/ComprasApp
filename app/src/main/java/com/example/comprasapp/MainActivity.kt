@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
             if (listas.isEmpty()) {
                 viewModel.criarLista("Minha Lista")
-            } else if (listasAtivasIds.isEmpty()) {
+            } else if (viewModel.listasAtivas.value.isNullOrEmpty()) {
                 viewModel.mudarListaAtiva(listas.first().id)
             }
         }
