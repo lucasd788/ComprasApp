@@ -6,10 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.example.comprasapp.data.local.Item
+import com.example.comprasapp.data.local.ShoppingList
 import com.example.comprasapp.data.repository.ItemRepository
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class MainViewModel(private val repository: ItemRepository) : ViewModel() {
 
@@ -18,10 +21,15 @@ class MainViewModel(private val repository: ItemRepository) : ViewModel() {
     }
 
     private var ordemAtual = Ordem.ALFABETICA
-
     private val termoBusca = MutableLiveData("")
 
-    private val listaDoBanco = repository.todosItens.asLiveData()
+    val todasAsListas = repository.todasAsListas.asLiveData()
+
+    val listasAtivas = MutableLiveData<List<Int>>()
+
+    private val listaDoBanco: LiveData<List<Item>> = listasAtivas.switchMap { ids ->
+        repository.buscarItensPorListas(ids).asLiveData()
+    }
 
     val itensExibidos = MediatorLiveData<List<Item>>().apply {
         addSource(listaDoBanco) { processarLista() }
@@ -31,6 +39,14 @@ class MainViewModel(private val repository: ItemRepository) : ViewModel() {
     val custoTotal: LiveData<Double> = itensExibidos.map { lista ->
         lista.filter { it.quantidade > 0.0 }
             .sumOf { it.quantidade * it.precoEstimado }
+    }
+
+    fun mudarListaAtiva(id: Int) {
+        listasAtivas.value = listOf(id)
+    }
+
+    fun mudarListasAtivas(ids: List<Int>) {
+        listasAtivas.value = ids
     }
 
     fun buscar(texto: String) {
@@ -57,38 +73,54 @@ class MainViewModel(private val repository: ItemRepository) : ViewModel() {
 
         val pendentesOrdenados = aplicarOrdem(pendentes)
         val compradosOrdenados = aplicarOrdem(comprados)
-
         val inativosOrdenados = inativos.sortedBy { it.nome.lowercase() }
 
         itensExibidos.value = pendentesOrdenados + compradosOrdenados + inativosOrdenados
     }
 
     private fun aplicarOrdem(lista: List<Item>): List<Item> {
+        val colator = java.text.Collator.getInstance(Locale.forLanguageTag("pt-BR"))
         return when (ordemAtual) {
-            Ordem.ALFABETICA -> lista.sortedBy { it.nome.lowercase() }
+            Ordem.ALFABETICA -> lista.sortedWith { a, b -> colator.compare(a.nome, b.nome) }
             Ordem.PRECO_CRESCENTE -> lista.sortedBy { it.precoEstimado }
             Ordem.PRECO_DECRESCENTE -> lista.sortedByDescending { it.precoEstimado }
             Ordem.QUANTIDADE -> lista.sortedByDescending { it.quantidade }
         }
     }
 
-    fun inserir(item: Item) = viewModelScope.launch {
-        repository.inserir(item)
+    fun criarLista(nome: String) = viewModelScope.launch {
+        val novaLista = ShoppingList(nome = nome)
+        val novoId = repository.criarLista(novaLista)
+        mudarListaAtiva(novoId.toInt())
     }
 
-    fun atualizar(item: Item) = viewModelScope.launch {
-        repository.atualizar(item)
+    fun renomearLista(lista: ShoppingList, novoNome: String) = viewModelScope.launch {
+        repository.renomearLista(lista.copy(nome = novoNome))
     }
 
-    fun excluir(item: Item) = viewModelScope.launch {
-        repository.excluir(item)
+    fun excluirLista(lista: ShoppingList) = viewModelScope.launch {
+        repository.excluirLista(lista)
+
+        val ativasAtuais = listasAtivas.value ?: emptyList()
+        if (ativasAtuais.contains(lista.id)) {
+            val novaListaAtiva = ativasAtuais.toMutableList()
+            novaListaAtiva.remove(lista.id)
+            listasAtivas.value = novaListaAtiva
+        }
     }
 
-    fun excluirComprados() = viewModelScope.launch {
-        repository.excluirComprados()
+    fun inserir(item: Item) = viewModelScope.launch { repository.inserir(item) }
+    fun atualizar(item: Item) = viewModelScope.launch { repository.atualizar(item) }
+
+    fun excluir(item: Item) = viewModelScope.launch { repository.excluir(item) }
+
+    fun excluirComprados() {
+        val ids = listasAtivas.value ?: return
+        viewModelScope.launch { repository.excluirComprados(ids) }
     }
 
-    fun desmarcarTodos() = viewModelScope.launch {
-        repository.desmarcarTodos()
+    fun desmarcarTodos() {
+        val ids = listasAtivas.value ?: return
+        viewModelScope.launch { repository.desmarcarTodos(ids) }
     }
 }

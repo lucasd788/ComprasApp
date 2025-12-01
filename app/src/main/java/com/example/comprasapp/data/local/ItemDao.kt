@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ItemDao {
 
-    @Query("SELECT * FROM itens ORDER BY nome ASC")
-    fun buscarTodosOsItens(): Flow<List<Item>>
+    @Query("SELECT * FROM itens WHERE listId IN (:listaIds) ORDER BY nome ASC")
+    fun buscarItensDasListas(listaIds: List<Int>): Flow<List<Item>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun inserir(item: Item)
@@ -23,9 +23,9 @@ interface ItemDao {
     @Delete
     suspend fun excluir(item: Item)
 
-    @Query("DELETE FROM itens WHERE comprado = 1")
-    suspend fun excluirItensComprados()
+    @Query("DELETE FROM itens WHERE listId IN (:listaIds) AND comprado = 1")
+    suspend fun excluirItensComprados(listaIds: List<Int>)
 
-    @Query("UPDATE itens SET comprado = 0")
-    suspend fun desmarcarTodos()
+    @Query("UPDATE itens SET comprado = 0 WHERE listId IN (:listaIds)")
+    suspend fun desmarcarTodos(listaIds: List<Int>)
 }

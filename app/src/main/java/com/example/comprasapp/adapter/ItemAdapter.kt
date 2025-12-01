@@ -4,12 +4,14 @@ import com.example.comprasapp.R
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.comprasapp.data.local.Item
+import com.example.comprasapp.data.local.ShoppingList
 import com.example.comprasapp.databinding.ItemListaBinding
 import java.text.NumberFormat
 import java.util.Locale
@@ -22,6 +24,14 @@ class ItemAdapter(
     private val aoClicarItem: (Item) -> Unit,
     private val aoClicarLongo: (Item) -> Unit
 ) : ListAdapter<Item, ItemAdapter.ItemViewHolder>(ComparadorDeItens()) {
+
+    private var mapaListas: Map<Int, String> = emptyMap()
+    var isVisualizacaoCombinada: Boolean = false
+
+    fun atualizarNomesListas(listas: List<ShoppingList>) {
+        mapaListas = listas.associate { it.id to it.nome }
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding = ItemListaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -38,6 +48,15 @@ class ItemAdapter(
 
         fun bind(item: Item) {
             binding.txtNome.text = item.nome
+
+            val nomeLista = mapaListas[item.listId]
+
+            if (nomeLista != null && isVisualizacaoCombinada) {
+                binding.cardOrigem.visibility = View.VISIBLE
+                binding.txtNomeListaOrigem.text = nomeLista
+            } else {
+                binding.cardOrigem.visibility = View.GONE
+            }
 
             val qtdFormatada = when {
                 item.unidade.equals("KG", ignoreCase = true) && item.quantidade > 0.0 && item.quantidade < 1.0 -> {

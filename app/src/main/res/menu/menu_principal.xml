@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/menu_ordenar"
-        android:title="@string/label_ordenar_por"
-        android:icon="@drawable/ic_sort"
-        app:showAsAction="ifRoom">
+        android:title="@string/label_ordenar_por">
         <menu>
             <item
                 android:id="@+id/ordem_alfabetica"
@@ -25,17 +22,13 @@
 
     <item
         android:id="@+id/menu_excluir_comprados"
-        android:title="@string/label_excluir_riscados"
-        app:showAsAction="never" />
+        android:title="@string/label_excluir_riscados"/>
 
     <item
         android:id="@+id/menu_desmarcar_todos"
-        android:title="@string/label_desmarcar_todos"
-        app:showAsAction="never" />
+        android:title="@string/label_desmarcar_todos"/>
 
     <item
         android:id="@+id/menu_tema"
-        android:title="@string/label_alternar_tema_claro_escuro"
-        android:icon="@drawable/ic_tema"
-        app:showAsAction="ifRoom" />
+        android:title="@string/label_alternar_tema"/>
 </menu>

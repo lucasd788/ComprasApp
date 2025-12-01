@@ -22,5 +22,13 @@
     <string name="label_quantidade_maior_primeiro">Quantidade (Maior Primeiro)</string>
     <string name="label_excluir_riscados">Excluir Riscados</string>
     <string name="label_desmarcar_todos">Desmarcar Todos</string>
-    <string name="label_alternar_tema_claro_escuro">Alternar Tema (Claro/Escuro)</string>
+    <string name="label_alternar_tema">Alternar Tema</string>
+    <string name="icone_de_lista">Ícone de lista</string>
+    <string name="carregando">Carregando…</string>
+    <string name="suas_listas">Suas Listas</string>
+    <string name="nova_lista">Nova Lista</string>
+    <string name="ver_itens_selecionados">Ver Itens Selecionados</string>
+    <string name="editar_lista">Editar Lista</string>
+    <string name="nome_da_lista">Nome da Lista</string>
+    <string name="arrastar_menu">Arrastar menu</string>
 </resources>
